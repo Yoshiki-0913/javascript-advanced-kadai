@@ -2,14 +2,14 @@
  let untyped = '';
  let typed = '';
  
- // 必要なHTML要素の取得
+ // HTML要素の取得
  const untypedfield = document.getElementById('untyped');
  const typedfield = document.getElementById('typed');
  const wrap = document.getElementById('wrap');
  const start = document.getElementById('start');
  const count = document.getElementById('count');
 
-// 複数のテキストを格納する配列
+// テキストを格納する配列
   const textLists = [
     'Hello World','This is my App','How are you?',
     'Today is sunny','I love JavaScript!','Good morning',
@@ -26,7 +26,7 @@
     'programming'
   ];
  
- // ランダムなテキストを表示
+ // ランダムテキスト表示
  const createText = () => {
   typed = '';
   typedfield.textContent = typed;
@@ -37,7 +37,7 @@
  // キー入力の判定
  const keyPress = e => {
   
-  // 誤タイプの場合
+  // ミスタイプ
   if(e.key !== untyped.substring(0, 1)) {
     wrap.classList.add('mistyped');
       // 100ms後に背景色を元に戻す
@@ -47,14 +47,14 @@
     return;
   }
 
-  // 正タイプの場合
+  // クリアタイプ
   wrap.classList.remove('mistyped');
   typed += untyped.substring(0, 1);
   untyped = untyped.substring(1);
   typedfield.textContent = typed;
   untypedfield.textContent = untyped;
 
-    // テキストがなくなったら新しいテキストを表示
+    // 新しいテキストを表示
     if(untyped === '') {
       createText();
     }
@@ -63,7 +63,7 @@
  // タイピングスキルのランクを判定
  const rankCheck = score => {};
  
- // ゲームを終了
+ // ゲーム終了
  const gameOver = id => {
     clearInterval(id);
     console.log('ゲーム終了!');
@@ -89,15 +89,15 @@
 
   // ゲームスタート時の処理
   start.addEventListener('click', () => {
-   // カウントダウンタイマーを開始する
+   // カウントダウンタイマー開始
     timer();
-    // ランダムなテキストを表示する
+    // ランダムテキスト表示
     createText();
   
-    // 「スタート」ボタンを非表示にする
+    // 「スタート」ボタン非表示
     start.style.display = 'none';
   
-    // キーボードのイベント処理
+    // キーボードイベント処理
     document.addEventListener('keypress', keyPress);
   });
   
