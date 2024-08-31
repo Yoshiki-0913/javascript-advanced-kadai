@@ -27,14 +27,14 @@
   ];
  
  // ランダムテキスト表示
- const createText = () => {
+ const randomText = () => {
   typed = '';
   typedfield.textContent = typed;
   let random = Math.floor(Math.random() * textLists.length);
   untyped = textLists[random];
   untypedfield.textContent = untyped;
 };
- // キー入力の判定
+ // 入力の判定
  const keyPress = e => {
   
   // ミスタイプ
