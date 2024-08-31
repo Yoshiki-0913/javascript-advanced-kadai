@@ -53,7 +53,7 @@
   wrap.classList.remove('mistyped');
   typed += untyped.substring(0, 1);
   untyped = untyped.substring(1);
-  score +=1;
+  score ++;
   typedfield.textContent = typed;
   untypedfield.textContent = untyped;
   scoreview.textContent = score;
@@ -64,33 +64,55 @@
     }
  };
  
- // タイピングスキルのランクを判定
- const rankCheck = score => {};
+// タイピングスキルのランクを判定
+const rankCheck = score => {
+  let text = '';
  
- // ゲーム終了
- const gameOver = id => {
-    clearInterval(id);
-    console.log('ゲーム終了!');
- };
+  // スコアに応じて変数textに格納する
+  if(score < 100) {
+    text = `あなたのランクはCです。\nBランクまであと${100 - score}文字です。`;
+  } else if(score < 200) {
+    text = `あなたのランクはBです。\nAランクまであと${200 - score}文字です。`;    
+  } else if(score < 300) {
+    text = `あなたのランクはAです。\nSランクまであと${300 - score}文字です。`;    
+  } else if(score >= 300) {
+    text = `あなたのランクはSです。\nおめでとうございます!`;    
+  }
+ 
+  // 生成したメッセージと一緒に文字列を返す
+  return `${score}文字打てました!\n${text}\n【OK】リトライ / 【キャンセル】終了`;
+};
+
+// ゲームを終了
+const gameOver = id => {
+  clearInterval(id);
+  setTimeout(()=>{
+    const result = confirm(rankCheck(score));},10);
+
+  // OKボタンクリックでリロード
+  if(result == true) {
+    window.location.reload();
+  }
+};
  
  // カウントダウンタイマー
  const timer = () => {
-     // タイマー部分のHTML要素（p要素）を取得する
+     // タイマー部分のHTML要素（p要素）を取得
      let time = count.textContent;
  
      const id = setInterval(() => {
    
-       // カウントダウンする
+       // カウントダウン
        time--;
        count.textContent = time;
    
-       // カウントが0になったらタイマーを停止する
+       // カウントが0になったらタイマーを停止
        if(time <= 0) {
-        gameOver(id);
         setTimeout(()=>{
           document.removeEventListener('keypress', keyPress); 
           typedfield.textContent = '';
           untypedfield.textContent = 'タイムアップ！';
+          gameOver(id);
          },10);
        }
      }, 1000);
