@@ -86,8 +86,7 @@ const rankCheck = score => {
 // ゲームを終了
 const gameOver = id => {
   clearInterval(id);
-  setTimeout(()=>{
-    const result = confirm(rankCheck(score));},10);
+  const result = confirm(rankCheck(score));
 
   // OKボタンクリックでリロード
   if(result == true) {
@@ -108,10 +107,10 @@ const gameOver = id => {
    
        // カウントが0になったらタイマーを停止
        if(time <= 0) {
+        document.removeEventListener('keypress', keyPress); 
+        typedfield.textContent = '';
+        untypedfield.textContent = 'タイムアップ！';
         setTimeout(()=>{
-          document.removeEventListener('keypress', keyPress); 
-          typedfield.textContent = '';
-          untypedfield.textContent = 'タイムアップ！';
           gameOver(id);
          },10);
        }
